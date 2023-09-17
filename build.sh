@@ -2,7 +2,7 @@
 
 echo "starting..."
 
-build_1()
+build_o()
 {
 echo "building object file.."
 gcc -c call_func.c -o call_func.o
@@ -61,9 +61,9 @@ ls -lrt
 if [ "$1" == "build" ]; then
     echo "called function --> $1"
     build
-elif [ "$1" == "build_1" ]; then
+elif [ "$1" == "build_o" ]; then
     echo "called function --> $1"
-    build_1
+    build_o
 elif [ "$1" == "rebuild" ]; then
     echo "called function --> $1"
     rebuild
