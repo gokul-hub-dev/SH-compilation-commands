@@ -31,12 +31,19 @@ gcc call_func.o main.o -o exe
 ls -lrt
 }
 
+build_shared(){
+  echo "building shared library and executable with debug symbols..."
+  gcc -fPIC -shared -g call_func.c -o libcallfunc.so
+  gcc -g main.c -L. -lcallfunc -Wl,-rpath=. -o exe_shared
+  ls -lrt libcallfunc.so exe_shared
+}
+
 clean(){
 echo "cleaning..."
 find . -iname "*.i" -type f -delete
 find . -iname "*.s" -type f -delete
 find . -iname "*.o" -type f -delete
-rm exe
+rm -f exe libcallfunc.so exe_shared
 ls
 }
 
@@ -45,7 +52,7 @@ echo "cleaning..."
 find . -iname "*.i" -type f -delete
 find . -iname "*.s" -type f -delete
 find . -iname "*.o" -type f -delete
-rm exe
+rm -f exe libcallfunc.so exe_shared
 
 echo "rebuilding..."
 cpp call_func.c call_func.i
@@ -64,6 +71,9 @@ if [ "$1" == "build" ]; then
 elif [ "$1" == "build_o" ]; then
     echo "called function --> $1"
     build_o
+elif [ "$1" == "build_shared" ] || [ "$1" == "build_so" ] || [ "$1" == "build_shared_debug" ] || [ "$1" == "build_so_debug" ]; then
+    echo "called function --> $1"
+    build_shared
 elif [ "$1" == "rebuild" ]; then
     echo "called function --> $1"
     rebuild
